@@ -682,7 +682,7 @@ function replaceData(next,message){
 function showWelcome(){
   modal('Set up your planner','Use a fictional family to explore the planner, or start with your own information.',
     '<div class="welcome-choices"><button type="button" data-action="welcome-sample">'+icon('star',23)+'<strong>Explore sample data</strong><small>See a filled calendar, expenses and reports.</small></button>'+
-    '<button type="button" data-action="welcome-blank">'+icon('note',23)+'<strong>Start blank</strong><small>Set up your family and custody pattern.</small></button></div>',false);
+    '<button type="button" data-action="welcome-blank">'+icon('note',23)+'<strong>Start blank</strong><small>Set up your family and custody pattern.</small></button><button type="button" id="atelier-welcome-login"><strong>Sign in or create account</strong><small>Open a shared workspace or sync across devices.</small></button></div>',false);
 }
 document.addEventListener('submit',event=>{
   if(!['record-form','settings-form'].includes(event.target.id))return;
@@ -773,6 +773,12 @@ document.addEventListener('click',event=>{
 const cloudPanel=document.querySelector('#atelier-cloud-panel');
 const cloudLauncher=document.querySelector('#atelier-cloud-open');
 cloudLauncher.addEventListener('click',()=>cloudPanel.showModal());
+dialog.addEventListener('click', event=>{
+  if(!event.target.closest('#atelier-welcome-login'))return;
+  dialog.close();
+  cloudPanel.showModal();
+});
+
 document.querySelector('#atelier-cloud-close').addEventListener('click',()=>cloudPanel.close());
 cloudPanel.querySelector('[role=status]').textContent='Connecting to Firebase…';
 cloudPanel.querySelector('#atelier-auth').hidden=true;
